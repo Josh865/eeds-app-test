@@ -1,6 +1,5 @@
 <template>
   <Page>
-    <ActionBar title="Welcome to NativeScript-Vue!" />
     <GridLayout columns="*" rows="*">
       <Button class="message" :text="msg" col="0" row="0" @tap="goToPage" />
     </GridLayout>
@@ -17,13 +16,13 @@ export default {
 
   data() {
     return {
-      msg: 'Hello World!',
+      msg: 'Open Log In Page',
     };
   },
 
   methods: {
     goToPage() {
-      this.$showModal(SelectLogInType);
+      this.$navigateTo(SelectLogInType);
     },
   },
 };
