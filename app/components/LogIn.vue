@@ -8,28 +8,46 @@
       />
     </ActionBar>
 
-    <FlexboxLayout justifyContent="center" alignItems="center">
-      <StackLayout>
-        <TextField
-          v-model="value"
-          :hint="selectedLogInType.label"
-          :autocorrect="false"
-          width="95%"
-          marginBottom="15"
-        />
-        <TextField
-          v-model="password"
-          :secure="true"
-          hint="Password"
-          width="95%"
-        />
-        <Button text="Log In" @tap="logIn" />
-      </StackLayout>
-    </FlexboxLayout>
+    <StackLayout>
+      <TextField
+        v-model="value"
+        :hint="selectedLogInType.label"
+        :autocorrect="false"
+        width="90%"
+        marginTop="15"
+        marginBottom="15"
+      />
+      <TextField
+        v-model="password"
+        :secure="true"
+        hint="Password"
+        width="90%"
+        fontFamily="sans"
+      />
+      <Button
+        text="Log In"
+        width="80%"
+        marginTop="15"
+        backgroundColor="blue"
+        color="white"
+        @tap="logIn"
+      />
+      <Button
+        text="Forgot password?"
+        width="80%"
+        marginTop="5"
+        padding="2"
+        backgroundColor="white"
+        color="blue"
+        androidElevation="0"
+        @tap="logIn"
+      />
+    </StackLayout>
   </Page>
 </template>
 
 <script>
+const appSettings = require('application-settings');
 const httpModule = require('tns-core-modules/http');
 
 import HomeMenuPage from './HomeMenu';
@@ -100,6 +118,9 @@ export default {
             alert('The PIN you entered could not be found.');
             return;
           }
+
+          // Store the user's PIN so they won't have to enter it next time
+          appSettings.setString('pin', response.PIN);
 
           this.$navigateTo(HomeMenuPage, {
             props: {
