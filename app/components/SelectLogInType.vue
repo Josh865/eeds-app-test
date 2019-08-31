@@ -24,7 +24,14 @@
         <Button
           text="Log In with Phone"
           class="btn"
+          marginBottom="20"
           @tap="goToLogInPage('phone')"
+        />
+        <Button
+          text="Create an Account"
+          class="btn"
+          backgroundColor="lightblue"
+          @tap="goToCreateAccountPage"
         />
       </StackLayout>
     </FlexboxLayout>
@@ -33,10 +40,12 @@
 
 <script>
 import LogIn from './LogIn';
+import CreateAccount from './CreateAccount';
 
 export default {
   components: {
     LogIn,
+    CreateAccount,
   },
 
   methods: {
@@ -46,6 +55,10 @@ export default {
           type: type,
         },
       });
+    },
+
+    goToCreateAccountPage() {
+      this.$navigateTo(CreateAccount);
     },
   },
 };
