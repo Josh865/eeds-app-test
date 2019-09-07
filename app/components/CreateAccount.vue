@@ -7,94 +7,77 @@
         @tap="$navigateBack"
       />
     </ActionBar>
-    <DockLayout stretchLastChild="true">
-      <ListPicker
-        v-show="showDegreePicker"
-        dock="bottom"
-        height="200"
-        backgroundColor="lightgray"
-        :items="degreeNames"
-        @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
-      />
-      <!-- TODO: Make this fetch specialties when opened -->
-      <ListPicker
-        v-show="showSpecialtyPicker"
-        dock="bottom"
-        height="200"
-        backgroundColor="lightgray"
-        :items="specialtyNames"
-        @selectedIndexChange="updateSelectedSpecialtyIndex($event.value)"
-      />
 
-      <!-- This is the main content, but it has to come after the content that gets
-      docked to the bottom of the window -->
-      <StackLayout>
-        <TextField
-          v-model="userInfo.first"
-          hint="First Name"
-          width="90%"
-          marginTop="15"
-          marginBottom="15"
-        />
-        <TextField
-          v-model="userInfo.last"
-          hint="Last Name"
-          width="90%"
-          marginBottom="15"
-        />
-        <TextField
-          :text="selectedDegreeName"
-          :editable="false"
-          hint="Degree"
-          width="90%"
-          marginBottom="15"
-          @focus="showDegreePicker = true"
-          @blur="showDegreePicker = false"
-        />
-        <TextField
-          :text="selectedSpecialtyName"
-          :editable="false"
-          hint="Specialty"
-          width="90%"
-          marginBottom="15"
-          @focus="showSpecialtyPicker = true"
-          @blur="showSpecialtyPicker = false"
-        />
-      </StackLayout>
-    </DockLayout>
+    <GridLayout :class="{ 'modal-open': showModal }">
+      <GridLayout class="content">
+        <StackLayout width="90%" marginTop="20">
+          <StackLayout marginBottom="20">
+            <Label text="First Name" marginBottom="3" />
+            <TextField
+              v-model="userInfo.first"
+              hint="First Name"
+              class="text-input"
+            />
+          </StackLayout>
 
-    <!-- <StackLayout>
-      <TextField
-        v-model="userInfo.first"
-        hint="First Name"
-        width="90%"
-        marginTop="15"
-        marginBottom="15"
-      />
-      <TextField
-        v-model="userInfo.last"
-        hint="Last Name"
-        width="90%"
-        marginBottom="15"
-      />
-      <Label
-        text="stretch"
-        verticalAlignment="stretch"
-        backgroundColor="#43b883"
-      />
-      <ListPicker
-        v-show="showDegreePicker"
-        class="picker"
-        :items="degreeNames"
-        @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
-      />
-      <Button
-        text="Select Degree"
-        @tap="showDegreePicker = !showDegreePicker"
-      />
-      <Button text="Select Specialty" @tap="fetchSpecialties" />
-      <ListPicker v-show="showSpecialtyPicker" :items="specialtyNames" />
-    </StackLayout> -->
+          <StackLayout marginBottom="20">
+            <Label text="Last Name" marginBottom="3" />
+            <TextField
+              v-model="userInfo.last"
+              hint="Last Name"
+              class="text-input"
+            />
+          </StackLayout>
+
+          <StackLayout marginBottom="20">
+            <Label text="Email" marginBottom="3" />
+            <TextField
+              v-model="userInfo.email"
+              hint="Email"
+              class="text-input"
+            />
+          </StackLayout>
+
+          <StackLayout>
+            <Label text="Degree" marginBottom="3" />
+            <Button
+              :text="selectedDegreeName"
+              androidElevation="0"
+              @tap="openDegreePicker"
+            />
+          </StackLayout>
+
+          <StackLayout>
+            <Label text="Specialty" marginBottom="3" />
+            <Button
+              :text="selectedSpecialtyName"
+              androidElevation="0"
+              @tap="openSpecialtyPicker"
+            />
+          </StackLayout>
+        </StackLayout>
+      </GridLayout>
+
+      <!-- Modal that displays degree and specialty list pickers -->
+      <AbsoluteLayout v-if="showModal" class="modal-wrapper" @tap="closeModal">
+        <FlexboxLayout width="100%" justifyContent="center">
+          <StackLayout v-if="showDegreePicker" class="modal">
+            <Label text="Select Your Degree" />
+            <ListPicker
+              :items="degreeNames"
+              @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
+            />
+          </StackLayout>
+          <StackLayout v-if="showSpecialtyPicker" class="modal">
+            <Label text="Select Your Specialty" />
+            <ListPicker
+              :items="specialtyNames"
+              @selectedIndexChange="updateSelectedSpecialtyIndex($event.value)"
+            />
+          </StackLayout>
+        </FlexboxLayout>
+      </AbsoluteLayout>
+    </GridLayout>
   </Page>
 </template>
 
@@ -111,12 +94,15 @@ export default {
       userInfo: {
         first: '',
         last: '',
+        email: '',
       },
       degrees: [],
       selectedDegreeIndex: null,
+      specialties: [],
+      selectedSpecialtyIndex: null,
       showDegreePicker: false,
       showSpecialtyPicker: false,
-      specialties: [],
+      showModal: false,
     };
   },
 
@@ -184,7 +170,6 @@ export default {
     },
 
     fetchSpecialties() {
-      console.log('fetching specialties');
       httpModule
         .getJSON(
           `https://www.eeds.com/ajax_functions.aspx?Function_ID=88&Degree_ID=${this.selectedDegreeId}`
@@ -196,14 +181,80 @@ export default {
           alert('Error fetching specialties.');
         });
     },
+
+    openDegreePicker() {
+      // Make sure the specialty picker is closed so they don't appear at the same time
+      this.showSpecialtyPicker = false;
+
+      this.showModal = true;
+      this.showDegreePicker = true;
+    },
+
+    openSpecialtyPicker() {
+      // Make sure the degree picker is closed so they don't appear at the same time
+      this.showDegreePicker = false;
+
+      this.showModal = true;
+      this.showSpecialtyPicker = true;
+    },
+
+    closeModal() {
+      this.showModal = false;
+
+      if (this.selectedDegreeId) {
+        this.fetchSpecialties();
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.picker {
-  width: 95%;
+.text-input {
   border-width: 1;
-  border-color: red;
+  border-style: solid;
+  border-color: lightgray;
+  border-radius: 3;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-open .content {
+  opacity: 0.2;
+}
+
+.modal-open .modal-wrapper {
+  visibility: visible;
+  animation-name: show;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+.modal-wrapper {
+  visibility: collapse;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 90%;
+  margin-top: 100;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10;
+  border-width: 0;
+  border-radius: 5;
+  border-color: black;
+  background-color: white;
 }
 </style>
