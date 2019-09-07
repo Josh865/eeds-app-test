@@ -43,6 +43,7 @@
             <Button
               :text="selectedDegreeName"
               androidElevation="0"
+              borderColor="black"
               @tap="openDegreePicker"
             />
           </StackLayout>
@@ -52,6 +53,7 @@
             <Button
               :text="selectedSpecialtyName"
               androidElevation="0"
+              borderColor="black"
               @tap="openSpecialtyPicker"
             />
           </StackLayout>
@@ -65,6 +67,7 @@
             <Label text="Select Your Degree" />
             <ListPicker
               :items="degreeNames"
+              :selectedIndex="selectedDegreeIndex"
               @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
             />
           </StackLayout>
@@ -72,6 +75,7 @@
             <Label text="Select Your Specialty" />
             <ListPicker
               :items="specialtyNames"
+              :selectedIndex="selectedSpecialtyIndex"
               @selectedIndexChange="updateSelectedSpecialtyIndex($event.value)"
             />
           </StackLayout>
@@ -97,9 +101,15 @@ export default {
         email: '',
       },
       degrees: [],
-      selectedDegreeIndex: null,
+      degreeNames: [],
+      selectedDegreeIndex: 0,
+      selectedDegreeName: 'Select Your Degree',
+      selectedDegreeId: null,
       specialties: [],
-      selectedSpecialtyIndex: null,
+      specialtyNames: [],
+      selectedSpecialtyIndex: 0,
+      selectedSpecialtyName: 'Select Your Specialty',
+      selectedSpecialtyId: null,
       showDegreePicker: false,
       showSpecialtyPicker: false,
       showModal: false,
@@ -110,39 +120,33 @@ export default {
     // The ListPicker component's items attribute must be an array of strings. Since the
     // degrees array is an array of objects, this computed property extracts the names
     // of the degrees into a new array that we can bind to the ListPicker.
-    degreeNames() {
-      return this.degrees.map(degree => degree.Degree_Name);
-    },
-
-    specialtyNames() {
-      return this.specialties.map(specialty => specialty.Specialty_Name);
-    },
-
+    // degreeNames() {
+    //   const degreeNames = this.degrees.map(degree => degree.Degree_Name);
+    //   // Add a "placeholder" as the first item in the array so it will be selected by default
+    //   return ['Select Your Degree', ...degreeNames];
+    // },
+    // specialtyNames() {
+    //   return this.specialties.map(specialty => specialty.Specialty_Name);
+    // },
     // The ListPicker component only gives us access to the index of the selected degree
     // from the degrees array, so we need this computed property to get the degree's ID.
-    selectedDegreeId() {
-      if (!this.selectedDegreeIndex) return null;
-
-      return this.degrees[this.selectedDegreeIndex].Degree_ID;
-    },
-
-    selectedDegreeName() {
-      if (!this.selectedDegreeIndex) return null;
-
-      return this.degrees[this.selectedDegreeIndex].Degree_Name;
-    },
-
-    selectedSpecialtyId() {
-      if (!this.selectedSpecialtyIndex) return null;
-
-      return this.specialties[this.selectedSpecialtyIndex].Specialty_ID;
-    },
-
-    selectedSpecialtyName() {
-      if (!this.selectedSpecialtyIndex) return null;
-
-      return this.specialties[this.selectedSpecialtyIndex].Specialty_Name;
-    },
+    // selectedDegreeId() {
+    //   // The first item in the degree ListPicker is the label, so it gets ignored
+    //   if (this.selectedDegreeIndex === 0) return null;
+    //   return this.degrees[this.selectedDegreeIndex].Degree_ID;
+    // },
+    // selectedDegreeName() {
+    //   if (this.selectedDegreeIndex === 0) return null;
+    //   return this.degrees[this.selectedDegreeIndex].Degree_Name;
+    // },
+    // selectedSpecialtyId() {
+    //   if (!this.selectedSpecialtyIndex) return null;
+    //   return this.specialties[this.selectedSpecialtyIndex].Specialty_ID;
+    // },
+    // selectedSpecialtyName() {
+    //   if (!this.selectedSpecialtyIndex) return null;
+    //   return this.specialties[this.selectedSpecialtyIndex].Specialty_Name;
+    // },
   },
 
   created() {
@@ -155,6 +159,7 @@ export default {
         .getJSON(`https://www.eeds.com/ajax_functions.aspx?Function_ID=142`)
         .then(response => {
           this.degrees = response;
+          this.degreeNames = this.degrees.map(degree => degree.Degree_Name);
         })
         .catch(err => {
           alert('Error fetching degrees.');
@@ -201,8 +206,32 @@ export default {
     closeModal() {
       this.showModal = false;
 
-      if (this.selectedDegreeId) {
+      // Stuff to do if they just chose a degree
+      if (this.showDegreePicker) {
+        this.selectedDegreeId = this.degrees[
+          this.selectedDegreeIndex
+        ].Degree_ID;
+
+        this.selectedDegreeName = this.degrees[
+          this.selectedDegreeIndex
+        ].Degree_Name;
+
         this.fetchSpecialties();
+
+        this.showDegreePicker = false;
+      }
+
+      // Stuff to do if they just chose a specialty
+      if (this.showSpecialtyPicker) {
+        this.selectedSpecialtyId = this.specialties[
+          this.selectedSpecialtyIndex
+        ].Specialty_ID;
+
+        this.selectedSpecialtyName = this.specialties[
+          this.selectedSpecialtyIndex
+        ].Specialty_Name;
+
+        this.showSpecialtyPicker = false;
       }
     },
   },
