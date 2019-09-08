@@ -38,12 +38,12 @@
             />
           </StackLayout>
 
-          <StackLayout>
+          <StackLayout marginBottom="20">
             <Label text="Degree" marginBottom="3" />
             <Button
               :text="selectedDegreeName"
               androidElevation="0"
-              borderColor="black"
+              class="text-input"
               @tap="openDegreePicker"
             />
           </StackLayout>
@@ -53,10 +53,18 @@
             <Button
               :text="selectedSpecialtyName"
               androidElevation="0"
-              borderColor="black"
+              class="text-input"
               @tap="openSpecialtyPicker"
             />
           </StackLayout>
+
+          <Button
+            text="Create Account"
+            androidElevation="0"
+            class="btn"
+            marginTop="40"
+            @tap="createAccount"
+          />
         </StackLayout>
       </GridLayout>
 
@@ -71,6 +79,7 @@
               @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
             />
           </StackLayout>
+
           <StackLayout v-if="showSpecialtyPicker" class="modal">
             <Label text="Select Your Specialty" />
             <ListPicker
@@ -116,37 +125,16 @@ export default {
     };
   },
 
-  computed: {
-    // The ListPicker component's items attribute must be an array of strings. Since the
-    // degrees array is an array of objects, this computed property extracts the names
-    // of the degrees into a new array that we can bind to the ListPicker.
-    // degreeNames() {
-    //   const degreeNames = this.degrees.map(degree => degree.Degree_Name);
-    //   // Add a "placeholder" as the first item in the array so it will be selected by default
-    //   return ['Select Your Degree', ...degreeNames];
-    // },
-    // specialtyNames() {
-    //   return this.specialties.map(specialty => specialty.Specialty_Name);
-    // },
-    // The ListPicker component only gives us access to the index of the selected degree
-    // from the degrees array, so we need this computed property to get the degree's ID.
-    // selectedDegreeId() {
-    //   // The first item in the degree ListPicker is the label, so it gets ignored
-    //   if (this.selectedDegreeIndex === 0) return null;
-    //   return this.degrees[this.selectedDegreeIndex].Degree_ID;
-    // },
-    // selectedDegreeName() {
-    //   if (this.selectedDegreeIndex === 0) return null;
-    //   return this.degrees[this.selectedDegreeIndex].Degree_Name;
-    // },
-    // selectedSpecialtyId() {
-    //   if (!this.selectedSpecialtyIndex) return null;
-    //   return this.specialties[this.selectedSpecialtyIndex].Specialty_ID;
-    // },
-    // selectedSpecialtyName() {
-    //   if (!this.selectedSpecialtyIndex) return null;
-    //   return this.specialties[this.selectedSpecialtyIndex].Specialty_Name;
-    // },
+  watch: {
+    selectedDegreeId(newVal, oldVal) {
+      if (newVal != oldVal) {
+        // Get rid of the old values related to the specialty
+        this.resetSpecialityValues();
+
+        // Get the specialties available for the newly selected degree
+        this.fetchSpecialties();
+      }
+    },
   },
 
   created() {
@@ -181,6 +169,9 @@ export default {
         )
         .then(response => {
           this.specialties = response;
+          this.specialtyNames = this.specialties.map(
+            specialty => specialty.Specialty_Name
+          );
         })
         .catch(err => {
           alert('Error fetching specialties.');
@@ -216,8 +207,6 @@ export default {
           this.selectedDegreeIndex
         ].Degree_Name;
 
-        this.fetchSpecialties();
-
         this.showDegreePicker = false;
       }
 
@@ -234,6 +223,19 @@ export default {
         this.showSpecialtyPicker = false;
       }
     },
+
+    // This prevents any weirdness when the user switches their specialty after making an
+    // initial selection.
+    resetSpecialityValues() {
+      this.selectedSpecialtyIndex = 0;
+      this.specialties = [];
+      this.specialtyNames = [];
+      this.selectedSpecialtyName = 'Select Your Specialty';
+    },
+
+    createAccount() {
+      //
+    },
   },
 };
 </script>
@@ -244,6 +246,7 @@ export default {
   border-style: solid;
   border-color: lightgray;
   border-radius: 3;
+  padding: 10;
 }
 
 @keyframes show {
@@ -285,5 +288,11 @@ export default {
   border-radius: 5;
   border-color: black;
   background-color: white;
+}
+
+.btn {
+  border-color: blue;
+  background-color: blue;
+  color: white;
 }
 </style>
