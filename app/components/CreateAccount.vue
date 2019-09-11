@@ -8,98 +8,118 @@
       />
     </ActionBar>
 
-    <GridLayout :class="{ 'modal-open': showModal }">
-      <GridLayout class="content">
-        <StackLayout width="90%" marginTop="20">
-          <StackLayout marginBottom="20">
-            <Label text="First Name" marginBottom="3" />
-            <TextField
-              v-model="userInfo.first"
-              hint="First Name"
-              class="text-input"
-            />
-          </StackLayout>
+    <ScrollView>
+      <GridLayout :class="{ 'modal-open': showModal }">
+        <GridLayout class="content">
+          <StackLayout width="90%" marginTop="20">
+            <StackLayout marginBottom="20">
+              <Label text="First Name" marginBottom="3" />
+              <TextField
+                v-model="userInfo.first"
+                hint="First Name"
+                class="text-input"
+              />
+            </StackLayout>
 
-          <StackLayout marginBottom="20">
-            <Label text="Last Name" marginBottom="3" />
-            <TextField
-              v-model="userInfo.last"
-              hint="Last Name"
-              class="text-input"
-            />
-          </StackLayout>
+            <StackLayout marginBottom="20">
+              <Label text="Last Name" marginBottom="3" />
+              <TextField
+                v-model="userInfo.last"
+                hint="Last Name"
+                class="text-input"
+              />
+            </StackLayout>
 
-          <StackLayout marginBottom="20">
-            <Label text="Email" marginBottom="3" />
-            <TextField
-              v-model="userInfo.email"
-              hint="Email"
-              class="text-input"
-            />
-          </StackLayout>
+            <StackLayout marginBottom="20">
+              <Label text="Email" marginBottom="3" />
+              <TextField
+                v-model="userInfo.email"
+                hint="Email"
+                class="text-input"
+              />
+            </StackLayout>
 
-          <StackLayout marginBottom="20">
-            <Label text="Degree" marginBottom="3" />
+            <StackLayout marginBottom="20">
+              <Label text="ZIP" marginBottom="3" />
+              <TextField
+                v-model="userInfo.zip"
+                hint="ZIP Code"
+                class="text-input"
+              />
+            </StackLayout>
+
+            <StackLayout marginBottom="20">
+              <Label text="Degree" marginBottom="3" />
+              <Button
+                :text="selectedDegreeName"
+                androidElevation="0"
+                class="text-input"
+                @tap="openDegreePicker"
+              />
+            </StackLayout>
+
+            <StackLayout>
+              <Label text="Specialty" marginBottom="3" />
+              <Button
+                :text="selectedSpecialtyName"
+                androidElevation="0"
+                class="text-input"
+                @tap="openSpecialtyPicker"
+              />
+            </StackLayout>
+
             <Button
-              :text="selectedDegreeName"
+              text="Create Account"
               androidElevation="0"
-              class="text-input"
-              @tap="openDegreePicker"
+              class="btn"
+              marginTop="40"
+              @tap="createAccount"
             />
           </StackLayout>
+        </GridLayout>
 
-          <StackLayout>
-            <Label text="Specialty" marginBottom="3" />
-            <Button
-              :text="selectedSpecialtyName"
-              androidElevation="0"
-              class="text-input"
-              @tap="openSpecialtyPicker"
-            />
-          </StackLayout>
+        <!-- Modal that displays degree and specialty list pickers -->
+        <AbsoluteLayout
+          v-if="showModal"
+          class="modal-wrapper"
+          @tap="closeModal"
+        >
+          <FlexboxLayout width="100%" justifyContent="center">
+            <StackLayout v-if="showDegreePicker" class="modal">
+              <Label text="Select Your Degree" />
+              <ListPicker
+                :items="degreeNames"
+                :selectedIndex="selectedDegreeIndex"
+                @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
+              />
+            </StackLayout>
 
-          <Button
-            text="Create Account"
-            androidElevation="0"
-            class="btn"
-            marginTop="40"
-            @tap="createAccount"
-          />
-        </StackLayout>
+            <StackLayout v-if="showSpecialtyPicker" class="modal">
+              <Label text="Select Your Specialty" />
+              <ListPicker
+                :items="specialtyNames"
+                :selectedIndex="selectedSpecialtyIndex"
+                @selectedIndexChange="
+                  updateSelectedSpecialtyIndex($event.value)
+                "
+              />
+            </StackLayout>
+          </FlexboxLayout>
+        </AbsoluteLayout>
       </GridLayout>
-
-      <!-- Modal that displays degree and specialty list pickers -->
-      <AbsoluteLayout v-if="showModal" class="modal-wrapper" @tap="closeModal">
-        <FlexboxLayout width="100%" justifyContent="center">
-          <StackLayout v-if="showDegreePicker" class="modal">
-            <Label text="Select Your Degree" />
-            <ListPicker
-              :items="degreeNames"
-              :selectedIndex="selectedDegreeIndex"
-              @selectedIndexChange="updateSelectedDegreeIndex($event.value)"
-            />
-          </StackLayout>
-
-          <StackLayout v-if="showSpecialtyPicker" class="modal">
-            <Label text="Select Your Specialty" />
-            <ListPicker
-              :items="specialtyNames"
-              :selectedIndex="selectedSpecialtyIndex"
-              @selectedIndexChange="updateSelectedSpecialtyIndex($event.value)"
-            />
-          </StackLayout>
-        </FlexboxLayout>
-      </AbsoluteLayout>
-    </GridLayout>
+    </ScrollView>
   </Page>
 </template>
 
 <script>
+import CreateAccountCompleted from './CreateAccountCompleted';
+
+const appSettings = require('application-settings');
 const httpModule = require('tns-core-modules/http');
 
 export default {
   components: {
-    //
+    CreateAccountCompleted,
   },
 
   data() {
@@ -108,6 +128,7 @@ export default {
         first: '',
         last: '',
         email: '',
+        zip: '',
       },
       degrees: [],
       degreeNames: [],
@@ -234,7 +255,36 @@ export default {
     },
 
     createAccount() {
-      //
+      this.$navigateTo(CreateAccountCompleted, {
+        props: {
+          // pin: response.PIN,
+        },
+      });
+
+      return;
+
+      // Save the user's last name and email address so we can look them to see if their
+      // account has been approved the next time they open the app.
+      appSettings.setString('lastName', this.userInfo.last);
+      appSettings.setString('email', this.userInfo.email);
+
+      httpModule
+        .request({
+          url: 'https://www.eeds.com/ajax_functions.aspx',
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          content: JSON.stringify({
+            Function_ID: 6,
+            Degree_ID: this.selectedDegreeId,
+            Specialty_ID: this.selectedSpecialtyId,
+            First_Name: this.userInfo.first,
+            Last_Name: this.userInfo.last,
+            ZIP: this.zip,
+            deviceToken: 'iPhone_App_User',
+            Email: this.userInfo.email,
+          }),
+        })
+        .then(response => console.log(response));
     },
   },
 };
