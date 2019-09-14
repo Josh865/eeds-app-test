@@ -19,8 +19,8 @@ export default {
   data() {
     return {
       pin: null,
-      lastName: '',
-      email: '',
+      lastName: appSettings.getString('lastName'),
+      email: appSettings.getString('email'),
     };
   },
 
