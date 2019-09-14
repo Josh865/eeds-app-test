@@ -263,6 +263,8 @@ export default {
 
       return;
 
+      appSettings.setBoolean('accountAwaitingApproval', true);
+
       // Save the user's last name and email address so we can look them to see if their
       // account has been approved the next time they open the app.
       appSettings.setString('lastName', this.userInfo.last);
