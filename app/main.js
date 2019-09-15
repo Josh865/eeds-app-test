@@ -1,7 +1,14 @@
 import Vue from 'nativescript-vue';
-import App from './components/App';
-
 import VueDevtools from 'nativescript-vue-devtools';
+// import * as PickerField from 'nativescript-picker/vue';
+// const pick = PickerField.default;
+// Vue.use(pick);
+
+import PickerField from 'nativescript-picker/vue';
+
+Vue.use(PickerField);
+
+import App from './components/App';
 
 if (TNS_ENV !== 'production') {
   Vue.use(VueDevtools);

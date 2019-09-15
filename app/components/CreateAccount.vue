@@ -50,7 +50,32 @@
               />
             </StackLayout>
 
-            <StackLayout marginBottom="20">
+            <PickerField
+              for="degree in degrees"
+              hint="Degree"
+              pickerTitle="Josh"
+              textField="Degree_Name"
+              valueField="Degree_ID"
+            >
+              <v-template>
+                <GridLayout columns="auto, *" rows="auto, *">
+                  <Label
+                    :text="degree.Degree_ID"
+                    col="0"
+                    row="1"
+                    marginBottom="20"
+                  />
+                  <Label
+                    :text="degree.Degree_Name"
+                    col="1"
+                    row="0"
+                    rowSpan="2"
+                  />
+                </GridLayout>
+              </v-template>
+            </PickerField>
+
+            <!-- <StackLayout marginBottom="20">
               <Label text="Degree" marginBottom="3" />
               <Button
                 :text="selectedDegreeName"
@@ -58,7 +83,7 @@
                 class="text-input"
                 @tap="openDegreePicker"
               />
-            </StackLayout>
+            </StackLayout> -->
 
             <StackLayout>
               <Label text="Specialty" marginBottom="3" />
