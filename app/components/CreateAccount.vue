@@ -9,7 +9,9 @@
     </ActionBar>
 
     <ScrollView>
-      <GridLayout :class="{ 'modal-open': showModal }">
+      <CreateAccountCompleted v-if="accountAwaitingApproval" />
+
+      <GridLayout v-else :class="{ 'modal-open': showModal }">
         <GridLayout class="content">
           <StackLayout width="90%" marginTop="20">
             <StackLayout marginBottom="20">
@@ -143,6 +145,11 @@ export default {
       showDegreePicker: false,
       showSpecialtyPicker: false,
       showModal: false,
+      accountAwaitingApproval: false,
+      // accountAwaitingApproval: appSettings.getBoolean(
+      //   'accountAwaitingApproval',
+      //   false
+      // ),
     };
   },
 
@@ -255,15 +262,10 @@ export default {
     },
 
     createAccount() {
-      this.$navigateTo(CreateAccountCompleted, {
-        props: {
-          // pin: response.PIN,
-        },
-      });
+      this.accountAwaitingApproval = true;
+      appSettings.setBoolean('accountAwaitingApproval', true);
 
       return;
-
-      appSettings.setBoolean('accountAwaitingApproval', true);
 
       // Save the user's last name and email address so we can look them to see if their
       // account has been approved the next time they open the app.
