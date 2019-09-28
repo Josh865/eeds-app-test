@@ -2,39 +2,38 @@
   <Page actionBarHidden="true">
     <FlexboxLayout justifyContent="center" alignItems="center">
       <StackLayout width="95%">
-        <FlexboxLayout alignItems="center">
-          <Label
-            :text="String.fromCharCode(0xf0e0)"
-            class="far"
-            fontSize="30"
-            backgroundColor="red"
-          />
-          <Button
-            text="Log In with eeds PIN"
-            padding="20"
-            backgroundColor="red"
-            @tap="goToLogInPage('pin')"
-          />
-        </FlexboxLayout>
+        <Button
+          :text="`${icon} Log In with eeds PIN`"
+          class="btn"
+          androidElevation="0"
+          @tap="goToLogInPage('pin')"
+        />
 
-        <Button :text="`${icon} Tap Me!`" tap="onTap" class="my-button" />
+        <StackLayout height="1" backgroundColor="lightgray" />
 
         <Button
           text="Log In with Email"
           class="btn"
-          marginBottom="20"
+          androidElevation="0"
           @tap="goToLogInPage('email')"
         />
+
+        <StackLayout height="2" backgroundColor="lightgray" />
+
         <Button
           text="Log In with Phone"
           class="btn"
-          marginBottom="20"
+          androidElevation="0"
           @tap="goToLogInPage('phone')"
         />
+
+        <StackLayout height="2" backgroundColor="lightgray" />
+
         <Button
           text="Create an Account"
           class="btn"
-          backgroundColor="lightblue"
+          androidElevation="0"
+          color="#007bff"
           @tap="goToCreateAccountPage"
         />
       </StackLayout>
@@ -76,20 +75,16 @@ export default {
 
 <style>
 .btn {
-  padding: 20;
-  border-width: 1;
-  border-radius: 5;
-  border-color: gray;
-  background-color: white;
-}
-
-.my-button {
-  background-color: orangered;
-  border-radius: 5;
-  color: white;
+  color: gray;
   font-family: 'Font Awesome 5 Free', 'fa-regular-400';
-  font-size: 24;
+  font-size: 18;
   vertical-align: middle;
-  width: 80%;
+  width: 100%;
+  border-width: 0;
+  border-radius: 0;
+  padding-top: 20;
+  padding-bottom: 20;
+  text-align: left;
+  background-color: white;
 }
 </style>
