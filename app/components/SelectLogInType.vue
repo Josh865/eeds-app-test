@@ -1,20 +1,24 @@
 <template>
-  <Page>
-    <ActionBar title="Log In">
-      <NavigationButton
-        text="Go back"
-        android.systemIcon="ic_menu_back"
-        @tap="$navigateBack"
-      />
-    </ActionBar>
+  <Page actionBarHidden="true">
     <FlexboxLayout justifyContent="center" alignItems="center">
       <StackLayout width="95%">
-        <Button
-          text="Log In with eeds PIN"
-          class="btn"
-          marginBottom="20"
-          @tap="goToLogInPage('pin')"
-        />
+        <FlexboxLayout alignItems="center">
+          <Label
+            :text="String.fromCharCode(0xf0e0)"
+            class="far"
+            fontSize="30"
+            backgroundColor="red"
+          />
+          <Button
+            text="Log In with eeds PIN"
+            padding="20"
+            backgroundColor="red"
+            @tap="goToLogInPage('pin')"
+          />
+        </FlexboxLayout>
+
+        <Button :text="`${icon} Tap Me!`" tap="onTap" class="my-button" />
+
         <Button
           text="Log In with Email"
           class="btn"
@@ -48,6 +52,12 @@ export default {
     CreateAccount,
   },
 
+  data() {
+    return {
+      icon: String.fromCharCode(0xf0f3),
+    };
+  },
+
   methods: {
     goToLogInPage(type) {
       this.$navigateTo(LogIn, {
@@ -71,5 +81,15 @@ export default {
   border-radius: 5;
   border-color: gray;
   background-color: white;
+}
+
+.my-button {
+  background-color: orangered;
+  border-radius: 5;
+  color: white;
+  font-family: 'Font Awesome 5 Free', 'fa-regular-400';
+  font-size: 24;
+  vertical-align: middle;
+  width: 80%;
 }
 </style>
