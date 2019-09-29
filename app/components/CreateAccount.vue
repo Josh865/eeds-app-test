@@ -9,54 +9,100 @@
     </ActionBar>
 
     <ScrollView>
+      <!-- If the user already created an account, don't show the form, but instead show a message informing them that their account is awaiting review -->
       <CreateAccountCompleted v-if="accountAwaitingApproval" />
 
       <GridLayout v-else>
-        <GridLayout class="content">
-          <StackLayout width="90%" marginTop="20">
-            <StackLayout marginBottom="20">
-              <!-- <Label text="First Name" marginBottom="3" /> -->
-              <TextField v-model="firstName" hint="First Name" />
-            </StackLayout>
+        <StackLayout>
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="First Name" fontSize="12" />
+            <TextField
+              v-model="firstName"
+              borderBottomWidth="1"
+              borderColor="transparent"
+            />
+          </StackLayout>
 
-            <StackLayout marginBottom="20">
-              <!-- <Label text="Last Name" marginBottom="3" /> -->
-              <TextField v-model="lastName" hint="Last Name" />
-            </StackLayout>
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="Last Name" fontSize="12" />
+            <TextField
+              v-model="lastName"
+              borderBottomWidth="1"
+              borderColor="transparent"
+            />
+          </StackLayout>
 
-            <StackLayout marginBottom="20">
-              <!-- <Label text="Email" marginBottom="3" /> -->
-              <TextField v-model="email" hint="Email" />
-            </StackLayout>
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="Email" fontSize="12" />
+            <TextField
+              v-model="email"
+              borderBottomWidth="1"
+              borderColor="transparent"
+            />
+          </StackLayout>
 
-            <StackLayout marginBottom="20">
-              <!-- <Label text="ZIP" marginBottom="3" /> -->
-              <TextField v-model="zip" hint="ZIP Code" />
-            </StackLayout>
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="ZIP Code" fontSize="12" />
+            <TextField
+              v-model="zip"
+              borderBottomWidth="1"
+              borderColor="transparent"
+            />
+          </StackLayout>
 
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="Degree" fontSize="12" />
             <PickerField
               ref="degreePicker"
               for="degree in degrees"
-              hint="Degree"
               pickerTitle="Select Your Degree"
               textField="Degree_Name"
               valueField="Degree_ID"
-              marginBottom="20"
+              borderBottomWidth="1"
+              borderBottomColor="transparent"
               @textChange="setDegreeId"
             >
               <v-template>
                 <Label :text="degree.Degree_Name" padding="15" fontSize="16" />
               </v-template>
             </PickerField>
+          </StackLayout>
 
+          <StackLayout
+            padding="10"
+            borderBottomWidth="1"
+            borderColor="lightgray"
+          >
+            <Label text="Specialty" fontSize="12" />
             <PickerField
               ref="specialtyPicker"
               for="specialty in specialties"
-              hint="Specialty"
               pickerTitle="Select Your Specialty"
               textField="Specialty_Name"
               valueField="Specialty_ID"
               modalAnimated="true"
+              borderBottomWidth="1"
+              borderBottomColor="transparent"
               @textChange="setSpecialtyId"
             >
               <v-template>
@@ -67,16 +113,16 @@
                 />
               </v-template>
             </PickerField>
-
-            <Button
-              text="Create Account"
-              androidElevation="0"
-              class="btn"
-              marginTop="40"
-              @tap="createAccount"
-            />
           </StackLayout>
-        </GridLayout>
+
+          <Button
+            text="Create Account"
+            androidElevation="0"
+            class="btn"
+            marginTop="40"
+            @tap="createAccount"
+          />
+        </StackLayout>
       </GridLayout>
     </ScrollView>
   </Page>
