@@ -1,6 +1,13 @@
 <template>
+  <!-- If the user has already signed in, take them directly to the home menu -->
   <HomeMenu v-if="pin" :pin="pin" />
+
+  <!-- If the user created an account but it hasn't been approved yet, display a message
+  informing them that their accout is awaiting approval -->
   <AwaitingApproval v-else-if="!pin && accountAwaitingApproval" />
+
+  <!-- If this is the first time they've ever opened the app or if they've signed out,
+  ask them how they would like to log in (PIN, email, or phone) -->
   <SelectLogInType v-else />
 </template>
 
