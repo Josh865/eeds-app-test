@@ -1,6 +1,10 @@
 // Global SCSS styling
 // @see https://docs.nativescript.org/ui/styling
 
+@import '~nativescript-theme-core/core.compat';
+// @import '~nativescript-theme-core/purple.compat';
+@import './variables.scss';
+
 .far {
   font-family: 'Font Awesome 5 Free', 'fa-regular-400';
   font-weight: 400;
