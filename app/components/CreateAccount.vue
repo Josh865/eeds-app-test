@@ -13,87 +13,53 @@
       <CreateAccountCompleted v-if="accountAwaitingApproval" />
 
       <GridLayout v-else>
-        <StackLayout>
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="First Name" fontSize="12" />
-            <TextField
-              v-model="firstName"
-              borderBottomWidth="1"
-              borderColor="transparent"
-            />
+        <StackLayout class="form">
+          <StackLayout class="input-field">
+            <Label text="First Name" class="label m-b-5" />
+            <TextField v-model="firstName" class="input" />
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="Last Name" fontSize="12" />
-            <TextField
-              v-model="lastName"
-              borderBottomWidth="1"
-              borderColor="transparent"
-            />
+          <StackLayout class="input-field">
+            <Label text="Last Name" class="label m-b-5" />
+            <TextField v-model="lastName" class="input" />
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="Email" fontSize="12" />
-            <TextField
-              v-model="email"
-              borderBottomWidth="1"
-              borderColor="transparent"
-            />
+          <StackLayout class="input-field">
+            <Label text="Email" class="label m-b-5" />
+            <TextField v-model="email" class="input" />
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="ZIP Code" fontSize="12" />
-            <TextField
-              v-model="zip"
-              borderBottomWidth="1"
-              borderColor="transparent"
-            />
+          <StackLayout class="input-field">
+            <Label text="ZIP" class="label m-b-5" />
+            <TextField v-model="zip" class="input" />
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="Degree" fontSize="12" />
+          <StackLayout class="input-field">
+            <Label text="Degree" class="label m-b-5" />
             <PickerField
               ref="degreePicker"
               for="degree in degrees"
               pickerTitle="Select Your Degree"
               textField="Degree_Name"
               valueField="Degree_ID"
-              borderBottomWidth="1"
-              borderBottomColor="transparent"
+              class="input picker-field"
               @textChange="setDegreeId"
             >
               <v-template>
-                <Label :text="degree.Degree_Name" padding="15" fontSize="16" />
+                <GridLayout class="list-group-item">
+                  <Label :text="degree.Degree_Name" />
+                </GridLayout>
               </v-template>
             </PickerField>
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
-          <StackLayout
-            padding="10"
-            borderBottomWidth="1"
-            borderColor="lightgray"
-          >
-            <Label text="Specialty" fontSize="12" />
+          <StackLayout class="input-field">
+            <Label text="Specialty" class="label m-b-5" />
             <PickerField
               ref="specialtyPicker"
               for="specialty in specialties"
@@ -101,25 +67,22 @@
               textField="Specialty_Name"
               valueField="Specialty_ID"
               modalAnimated="true"
-              borderBottomWidth="1"
-              borderBottomColor="transparent"
+              class="input"
               @textChange="setSpecialtyId"
             >
               <v-template>
-                <Label
-                  :text="specialty.Specialty_Name"
-                  padding="15"
-                  fontSize="16"
-                />
+                <GridLayout class="list-group-item">
+                  <Label :text="specialty.Specialty_Name" />
+                </GridLayout>
               </v-template>
             </PickerField>
+            <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
 
           <Button
             text="Create Account"
             androidElevation="0"
-            class="btn"
-            marginTop="40"
+            class="btn btn-primary btn-rounded-sm"
             @tap="createAccount"
           />
         </StackLayout>
@@ -237,18 +200,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text-input {
-  border-width: 1;
-  border-style: solid;
-  border-color: lightgray;
-  border-radius: 3;
-  padding: 10;
-}
-
-.btn {
-  border-color: blue;
-  background-color: blue;
-  color: white;
-}
-</style>
+<style></style>

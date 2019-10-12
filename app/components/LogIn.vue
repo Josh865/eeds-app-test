@@ -8,38 +8,37 @@
       />
     </ActionBar>
 
-    <StackLayout>
-      <TextField
-        v-model="value"
-        :hint="selectedLogInType.label"
-        :autocorrect="false"
-        width="90%"
-        marginTop="15"
-        marginBottom="15"
-      />
-      <TextField
-        v-model="password"
-        :secure="true"
-        hint="Password"
-        width="90%"
-        fontFamily="sans"
-      />
+    <StackLayout class="form">
+      <StackLayout class="input-field">
+        <TextField
+          v-model="value"
+          :hint="selectedLogInType.label"
+          :autocorrect="false"
+          class="input"
+        />
+        <StackLayout class="hr-light"></StackLayout>
+      </StackLayout>
+
+      <StackLayout class="input-field">
+        <TextField
+          v-model="password"
+          :secure="true"
+          hint="Password"
+          class="input"
+        />
+        <StackLayout class="hr-light"></StackLayout>
+      </StackLayout>
+
       <Button
         text="Log In"
-        width="80%"
+        class="btn btn-primary"
         marginTop="15"
-        backgroundColor="blue"
-        color="white"
         @tap="logIn"
       />
+
       <Button
-        text="Forgot password?"
-        width="80%"
-        marginTop="5"
-        padding="2"
-        backgroundColor="white"
-        color="blue"
-        androidElevation="0"
+        text="Forgot Password?"
+        class="btn btn-outline btn-rounded-sm"
         @tap="logIn"
       />
     </StackLayout>

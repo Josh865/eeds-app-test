@@ -3,37 +3,36 @@
     <FlexboxLayout justifyContent="center" alignItems="center">
       <StackLayout width="95%">
         <Button
-          :text="`${icon} Log In with eeds PIN`"
-          class="btn"
+          text="Log In with eeds PIN"
+          class="btn btn-primary btn-rounded-sm"
           androidElevation="0"
           @tap="goToLogInPage('pin')"
         />
 
-        <StackLayout height="1" backgroundColor="lightgray" />
+        <StackLayout class="hr-light" />
 
         <Button
           text="Log In with Email"
-          class="btn"
+          class="btn btn-primary btn-rounded-sm"
           androidElevation="0"
           @tap="goToLogInPage('email')"
         />
 
-        <StackLayout height="2" backgroundColor="lightgray" />
+        <StackLayout class="hr-light" />
 
         <Button
           text="Log In with Phone"
-          class="btn"
+          class="btn btn-primary btn-rounded-sm"
           androidElevation="0"
           @tap="goToLogInPage('phone')"
         />
 
-        <StackLayout height="2" backgroundColor="lightgray" />
+        <StackLayout class="hr-dark" />
 
         <Button
           text="Create an Account"
-          class="btn"
+          class="btn btn-primary btn-rounded-sm"
           androidElevation="0"
-          color="#007bff"
           @tap="goToCreateAccountPage"
         />
       </StackLayout>
@@ -74,7 +73,7 @@ export default {
 </script>
 
 <style>
-.btn {
+/* .btn {
   color: gray;
   font-family: 'Font Awesome 5 Free', 'fa-regular-400';
   font-size: 18;
@@ -86,5 +85,5 @@ export default {
   padding-bottom: 20;
   text-align: left;
   background-color: white;
-}
+} */
 </style>
