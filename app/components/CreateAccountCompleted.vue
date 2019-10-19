@@ -12,7 +12,7 @@
       />
       <Button
         text="Visit eeds.com"
-        class="btn btn-primary m-t-30"
+        class="btn btn-primary m-t-20"
         @tap="handleTap"
       />
     </StackLayout>

@@ -1,9 +1,6 @@
 <template>
-  <Page>
-    <ActionBar
-      title="Create an Account"
-      :actionBarHidden="accountAwaitingApproval"
-    >
+  <Page :actionBarHidden="accountAwaitingApproval">
+    <ActionBar title="Create an Account" class="action-bar">
       <NavigationButton
         text="Go back"
         android.systemIcon="ic_menu_back"
@@ -126,7 +123,7 @@ export default {
       },
       degrees: [],
       specialties: [],
-      accountAwaitingApproval: true,
+      accountAwaitingApproval: false,
       // accountAwaitingApproval: appSettings.getBoolean(
       //   'accountAwaitingApproval',
       //   false
@@ -289,4 +286,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+PickerPage ActionBar {
+  background-color: #1c79e4;
+  color: white;
+}
+</style>

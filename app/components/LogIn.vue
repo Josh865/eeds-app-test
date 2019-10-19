@@ -1,6 +1,9 @@
 <template>
   <Page>
-    <ActionBar :title="`Log In with ${selectedLogInType.label}`">
+    <ActionBar
+      :title="`Log In with ${selectedLogInType.label}`"
+      class="action-bar"
+    >
       <NavigationButton
         text="Go back"
         android.systemIcon="ic_menu_back"
@@ -14,9 +17,10 @@
           v-model="value"
           :hint="selectedLogInType.label"
           :autocorrect="false"
+          :keyboardType="selectedLogInType.keyboardType"
           class="input"
         />
-        <StackLayout class="hr-light"></StackLayout>
+        <StackLayout class="hr-light" />
       </StackLayout>
 
       <StackLayout class="input-field">
@@ -26,7 +30,7 @@
           hint="Password"
           class="input"
         />
-        <StackLayout class="hr-light"></StackLayout>
+        <StackLayout class="hr-light" />
       </StackLayout>
 
       <Button
@@ -72,16 +76,19 @@ export default {
         pin: {
           label: 'PIN',
           url: 'https://www.eeds.com/ajax_functions.aspx?Function_ID=5&PIN=',
+          keyboardType: 'number',
         },
         email: {
           label: 'Email Address',
           url:
             'https://www.eeds.com/ajax_functions.aspx?Function_ID=50&Email_Address=',
+          keyboardType: 'email',
         },
         phone: {
           label: 'Phone Number',
           url:
             'https://www.eeds.com/ajax_functions.aspx?Function_ID=50&Phone_Number=',
+          keyboardType: 'phone',
         },
       },
     };

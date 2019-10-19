@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <ActionBar :title="`WebView`">
+    <ActionBar :title="`WebView`" class="action-bar">
       <NavigationButton
         text="Go back"
         android.systemIcon="ic_menu_back"

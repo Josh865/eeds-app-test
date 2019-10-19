@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <ActionBar :title="`Home Menu for ${pin}`">
+    <ActionBar :title="`Home Menu for ${pin}`" class="action-bar">
       <NavigationButton
         text="Go back"
         android.systemIcon="ic_menu_back"
