@@ -32,6 +32,7 @@
               v-model.trim="userInfo.email"
               class="input"
               keyboardType="email"
+              autocorrect="false"
             />
             <StackLayout class="hr-light"></StackLayout>
           </StackLayout>
