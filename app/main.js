@@ -1,8 +1,4 @@
 import Vue from 'nativescript-vue';
-import VueDevtools from 'nativescript-vue-devtools';
-// import * as PickerField from 'nativescript-picker/vue';
-// const pick = PickerField.default;
-// Vue.use(pick);
 
 import PickerField from 'nativescript-picker/vue';
 
@@ -10,9 +6,6 @@ Vue.use(PickerField);
 
 import App from './components/App';
 
-if (TNS_ENV !== 'production') {
-  Vue.use(VueDevtools);
-}
 // Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = TNS_ENV === 'production';
 
