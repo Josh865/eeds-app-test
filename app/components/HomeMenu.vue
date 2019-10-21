@@ -1,11 +1,6 @@
 <template>
   <Page>
-    <ActionBar :title="`Home Menu for ${pin}`" class="action-bar">
-      <NavigationButton
-        text="Go back"
-        android.systemIcon="ic_menu_back"
-        @tap="$navigateBack"
-      />
+    <ActionBar title="Home Menu" class="action-bar">
       <ActionItem
         ios.systemIcon="16"
         ios.position="right"
@@ -13,6 +8,7 @@
         @tap="signOut"
       />
     </ActionBar>
+
     <StackLayout>
       <HomeMenuSection
         v-for="section in sections"

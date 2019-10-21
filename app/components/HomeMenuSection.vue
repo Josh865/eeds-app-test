@@ -1,9 +1,15 @@
 <template>
   <StackLayout>
-    <Label :text="sectionName" class="section-name" />
-    <ListView for="item in menuItemsForSection" @itemTap="onItemTap">
+    <Label :text="sectionName" class="h2" />
+    <ListView
+      for="item in menuItemsForSection"
+      class="list-group"
+      @itemTap="onItemTap"
+    >
       <v-template>
-        <Label :text="item.Button_Text" class="list-item" />
+        <GridLayout class="list-group-item">
+          <Label :text="item.Button_Text" />
+        </GridLayout>
       </v-template>
     </ListView>
   </StackLayout>
@@ -34,6 +40,7 @@ export default {
   methods: {
     // Emit an event instructing the parent component to load a Web View pointing to the specified URL
     onItemTap(e) {
+      console.log('do not');
       this.$emit('go-to-page', e.item.Button_URL);
     },
   },
@@ -50,5 +57,8 @@ export default {
 
 .list-item {
   padding: 15;
+  width: 100%;
+  margin-bottom: 10;
+  background-color: white;
 }
 </style>
