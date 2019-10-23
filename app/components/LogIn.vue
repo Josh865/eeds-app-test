@@ -76,16 +76,16 @@ export default {
         pin: {
           label: 'PIN',
           url: 'https://www.eeds.com/ajax_functions.aspx?Function_ID=5&PIN=',
-          keyboardType: 'number',
+          keyboardType: 'phone',
         },
         email: {
-          label: 'Email Address',
+          label: 'Email',
           url:
             'https://www.eeds.com/ajax_functions.aspx?Function_ID=50&Email_Address=',
           keyboardType: 'email',
         },
         phone: {
-          label: 'Phone Number',
+          label: 'Phone',
           url:
             'https://www.eeds.com/ajax_functions.aspx?Function_ID=50&Phone_Number=',
           keyboardType: 'phone',
