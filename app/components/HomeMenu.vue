@@ -1,6 +1,9 @@
 <template>
   <Page>
     <ActionBar title="Home Menu" class="action-bar">
+      <!-- Hide the "Go Back" button -->
+      <NavigationButton visibility="collapse" />
+
       <ActionItem
         ios.systemIcon="16"
         ios.position="right"
@@ -50,13 +53,24 @@ export default {
   },
 
   computed: {
-    // Loop through the menu items that are available to the user and extract an array of unique button sections
+    events() {
+      return this.menuItems.filter(
+        item => item.Button_Section === 'Your Events'
+      );
+    },
+
+    // Loop through the menu items that are available to the user and extract an array of
+    // unique button sections. We'll use these to loop over each section and get the
+    // menu items within that section.
     sections() {
       const sections = [
         ...new Set(this.menuItems.map(menuItem => menuItem.Button_Section)),
       ];
 
       return sections;
+
+      // Don't return 'Your Events' since those get their own special treatment
+      // return sections.filter(section => section !== 'Your Events');
     },
   },
 
@@ -80,7 +94,8 @@ export default {
         });
     },
 
-    // This will open the URL in a WebView when a button is tapped inside the HomeMenuSection child component
+    // This will open the URL in a WebView when a button is tapped inside the
+    // HomeMenuSection child component
     goToPage(url) {
       this.$navigateTo(WebViewContainer, {
         props: {
