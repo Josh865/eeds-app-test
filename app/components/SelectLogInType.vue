@@ -80,8 +80,8 @@ export default {
 }
 
 .btn-transparent:highlighted {
-  background-color: transparent;
-  color: white;
+  background-color: white;
+  color: #1c79e4;
 }
 
 .img {
