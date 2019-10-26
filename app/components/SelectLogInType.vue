@@ -90,9 +90,10 @@ export default {
 
 .gradient {
   background-image: linear-gradient(
-    90deg,
+    130deg,
     rgba(28, 121, 228, 1) 0%,
-    rgba(77, 144, 222, 1) 50%,
+    rgba(77, 144, 222, 1) 30%,
+    rgba(77, 144, 222, 1) 70%,
     rgba(28, 121, 228, 1) 100%
   );
 }
