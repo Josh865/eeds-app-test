@@ -12,6 +12,20 @@
       />
     </ActionBar>
 
+    <!--
+    <StackLayout width="90%">
+      <FlexboxLayout class="home-menu-item h2">
+        <Label :text="icon('f1ad')" class="far p-r-15" />
+        <Label text="My Event" />
+      </FlexboxLayout>
+
+      <FlexboxLayout class="home-menu-item h2">
+        <Label :text="icon('f1ad')" class="far p-r-15" />
+        <Label text="My Event" />
+      </FlexboxLayout>
+    </StackLayout>
+    -->
+
     <StackLayout>
       <HomeMenuSection
         v-for="section in sections"
@@ -32,7 +46,11 @@ import HomeMenuSection from './HomeMenuSection';
 import SelectLogInType from './SelectLogInType';
 import WebViewContainer from './WebViewContainer';
 
+import { fontIcon } from './mixins/fontIcon';
+
 export default {
+  mixins: [fontIcon],
+
   components: {
     HomeMenuSection,
     SelectLogInType,
@@ -82,7 +100,9 @@ export default {
     fetchHomeMenuItems() {
       httpModule
         .getJSON(
-          `https://www.eeds.com/ajax_functions.aspx?Function_ID=138&PIN=${this.pin}`
+          `https://www.eeds.com/ajax_functions.aspx?Function_ID=138&PIN=${
+            this.pin
+          }`
         )
         .then(response => {
           if (response.Error_Message !== '') {
@@ -113,4 +133,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.home-menu-item {
+  align-items: center;
+  margin-top: 10;
+  padding: 20;
+  border-width: 1;
+  border-radius: 10;
+  border-color: lightgray;
+  background-color: white;
+}
+</style>
