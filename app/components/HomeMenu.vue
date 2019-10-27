@@ -15,12 +15,12 @@
     <!--
     <StackLayout width="90%">
       <FlexboxLayout class="home-menu-item h2">
-        <Label :text="icon('f1ad')" class="far p-r-15" />
+        <Label :text="fontIcon('f1ad')" class="far p-r-15" />
         <Label text="My Event" />
       </FlexboxLayout>
 
       <FlexboxLayout class="home-menu-item h2">
-        <Label :text="icon('f1ad')" class="far p-r-15" />
+        <Label :text="fontIcon('f1ad')" class="far p-r-15" />
         <Label text="My Event" />
       </FlexboxLayout>
     </StackLayout>
@@ -100,9 +100,7 @@ export default {
     fetchHomeMenuItems() {
       httpModule
         .getJSON(
-          `https://www.eeds.com/ajax_functions.aspx?Function_ID=138&PIN=${
-            this.pin
-          }`
+          `https://www.eeds.com/ajax_functions.aspx?Function_ID=138&PIN=${this.pin}`
         )
         .then(response => {
           if (response.Error_Message !== '') {
