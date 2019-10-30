@@ -1,22 +1,24 @@
 <template>
-  <StackLayout>
+  <StackLayout width="90%" paddingBottom="15">
     <Label :text="sectionName" class="h2" />
-    <ListView
-      for="item in menuItemsForSection"
-      class="list-group"
-      @itemTap="onItemTap"
+    <FlexboxLayout
+      v-for="item in menuItemsForSection"
+      class="home-menu-item"
+      @tap="onItemTap(item)"
     >
-      <v-template>
-        <GridLayout class="list-group-item">
-          <Label :text="item.Button_Text" />
-        </GridLayout>
-      </v-template>
-    </ListView>
+      <!-- <Label :text="fontIcon('f061')" class="far p-r-10" /> -->
+      <Label text="➜" class="p-r-10" />
+      <Label :text="item.Button_Text" />
+    </FlexboxLayout>
   </StackLayout>
 </template>
 
 <script>
+import { fontIcon } from './mixins/fontIcon';
+
 export default {
+  mixins: [fontIcon],
+
   props: {
     sectionName: {
       type: String,
@@ -39,26 +41,21 @@ export default {
 
   methods: {
     // Emit an event instructing the parent component to load a Web View pointing to the specified URL
-    onItemTap(e) {
-      console.log('do not');
-      this.$emit('go-to-page', e.item.Button_URL);
+    onItemTap(item) {
+      this.$emit('go-to-page', item.Button_URL);
     },
   },
 };
 </script>
 
 <style>
-.section-name {
-  margin-top: 24;
-  margin-left: 16;
-  font-size: 24;
-  font-weight: bold;
-}
-
-.list-item {
-  padding: 15;
-  width: 100%;
-  margin-bottom: 10;
+.home-menu-item {
+  align-items: center;
+  margin-top: 10;
+  padding: 20;
+  border-width: 1;
+  border-radius: 10;
+  border-color: lightgray;
   background-color: white;
 }
 </style>

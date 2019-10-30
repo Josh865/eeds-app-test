@@ -12,29 +12,35 @@
       />
     </ActionBar>
 
-    <!--
-    <StackLayout width="90%">
-      <FlexboxLayout class="home-menu-item h2">
-        <Label :text="fontIcon('f1ad')" class="far p-r-15" />
-        <Label text="My Event" />
-      </FlexboxLayout>
+    <ScrollView>
+      <StackLayout>
+        <StackLayout backgroundColor="#0eb9db" class="m-b-20 p-y-20">
+          <StackLayout width="90%">
+            <Label text="Your Events" class="h2" color="white" />
+            <StackLayout>
+              <FlexboxLayout
+                v-for="event in events"
+                class="home-menu-item"
+                @tap="goToPage(event.Button_URL)"
+              >
+                <Label :text="fontIcon('f481')" class="fas p-r-10" />
+                <Label :text="event.Button_Text" />
+              </FlexboxLayout>
+            </StackLayout>
+          </StackLayout>
+        </StackLayout>
 
-      <FlexboxLayout class="home-menu-item h2">
-        <Label :text="fontIcon('f1ad')" class="far p-r-15" />
-        <Label text="My Event" />
-      </FlexboxLayout>
-    </StackLayout>
-    -->
-
-    <StackLayout>
-      <HomeMenuSection
-        v-for="section in sections"
-        :key="section"
-        :section-name="section"
-        :all-menu-items="menuItems"
-        @go-to-page="goToPage"
-      />
-    </StackLayout>
+        <StackLayout>
+          <HomeMenuSection
+            v-for="section in sections"
+            :key="section"
+            :section-name="section"
+            :all-menu-items="menuItems"
+            @go-to-page="goToPage"
+          />
+        </StackLayout>
+      </StackLayout>
+    </ScrollView>
   </Page>
 </template>
 
@@ -85,10 +91,8 @@ export default {
         ...new Set(this.menuItems.map(menuItem => menuItem.Button_Section)),
       ];
 
-      return sections;
-
       // Don't return 'Your Events' since those get their own special treatment
-      // return sections.filter(section => section !== 'Your Events');
+      return sections.filter(section => section !== 'Your Events');
     },
   },
 
@@ -131,14 +135,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.home-menu-item {
-  align-items: center;
-  margin-top: 10;
-  padding: 20;
-  border-width: 1;
-  border-radius: 10;
-  border-color: lightgray;
-  background-color: white;
-}
-</style>
+<style scoped></style>
