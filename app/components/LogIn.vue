@@ -117,13 +117,16 @@ export default {
       }
 
       httpModule.getJSON(this.logInUrl).then(
-        response => {
+        async response => {
           this.busy = false;
 
           if (response.PIN_Status !== true) {
             alert('The PIN you entered could not be found.');
             return;
           }
+
+          // Prompt the user to confirm his/her last name before proceeding
+          await this.confirmName(response);
 
           // Store the user's PIN so they won't have to enter it next time
           appSettings.setString('pin', response.PIN);
@@ -139,6 +142,23 @@ export default {
           this.busy = false;
         }
       );
+    },
+
+    confirmName(response) {
+      return new Promise((resolve, reject) => {
+        action(
+          'Select your last name',
+          'Cancel Log In',
+          response.Names_Array
+        ).then(result => {
+          if (result === response.Correct_Name) {
+            resolve();
+          } else {
+            alert('Incorrect name selected.');
+            reject();
+          }
+        });
+      });
     },
 
     validate() {
