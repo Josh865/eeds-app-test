@@ -4,12 +4,7 @@
       <!-- Hide the "Go Back" button -->
       <NavigationButton visibility="collapse" />
 
-      <ActionItem
-        ios.systemIcon="16"
-        ios.position="right"
-        text="Sign Out"
-        @tap="signOut"
-      />
+      <ActionItem ios.position="right" text="Sign Out" @tap="signOut" />
     </ActionBar>
 
     <ScrollView>
