@@ -111,7 +111,9 @@ export default {
           this.busy = false;
 
           if (response.PIN_Status !== true) {
-            alert('The PIN you entered could not be found.');
+            alert(
+              `We couldn't find an account associated with the ${this.selectedLogInType.label} you entered.`
+            );
             return;
           }
 
