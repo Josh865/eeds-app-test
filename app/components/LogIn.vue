@@ -98,11 +98,8 @@ export default {
     async logIn() {
       this.busy = true;
 
-      // Before proceeding, make sure the data the user entered is valid.
-      const isValid = await this.validate();
-
-      if (!isValid) {
-        alert(`Please enter your ${this.selectedLogInType.label}`);
+      if (!this.value) {
+        alert(`Please enter your ${this.selectedLogInType.label}.`);
         return;
       }
 
@@ -150,16 +147,6 @@ export default {
             reject();
           }
         });
-      });
-    },
-
-    validate() {
-      return new Promise(resolve => {
-        if (this.value === '') {
-          resolve(false);
-        }
-
-        resolve(true);
       });
     },
   },
