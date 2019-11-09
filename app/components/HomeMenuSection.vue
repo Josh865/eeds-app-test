@@ -1,15 +1,26 @@
 <template>
   <StackLayout width="90%" paddingBottom="15">
-    <Label :text="sectionName" class="h2" />
-    <FlexboxLayout
+    <Label
+      :text="sectionName"
+      class="m-b-15 font-weight-bold uppercase"
+      opacity="0.6"
+    />
+    <StackLayout
       v-for="item in menuItemsForSection"
-      class="home-menu-item"
+      :key="item.Button_URL"
       @tap="onItemTap(item)"
     >
-      <!-- <Label :text="fontIcon('f061')" class="far p-r-10" /> -->
-      <Label text="➜" class="p-r-10" />
-      <Label :text="item.Button_Text" />
-    </FlexboxLayout>
+      <FlexboxLayout justifyContent="space-between" alignItems="center">
+        <Label :text="item.Button_Text" />
+        <Label :text="fontIcon('f105')" class="fas p-r-10" opacity="0.6" />
+      </FlexboxLayout>
+      <StackLayout
+        height="1"
+        width="100%"
+        backgroundColor="lightgray"
+        class="m-y-15"
+      />
+    </StackLayout>
   </StackLayout>
 </template>
 
@@ -48,14 +59,4 @@ export default {
 };
 </script>
 
-<style>
-.home-menu-item {
-  align-items: center;
-  margin-top: 10;
-  padding: 20;
-  border-width: 1;
-  border-radius: 10;
-  border-color: lightgray;
-  background-color: white;
-}
-</style>
+<style scoped></style>

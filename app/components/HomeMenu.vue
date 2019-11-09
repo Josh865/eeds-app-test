@@ -9,17 +9,21 @@
 
     <ScrollView>
       <StackLayout>
-        <StackLayout backgroundColor="#0eb9db" class="m-b-20 p-y-20">
+        <StackLayout backgroundColor="#c3dfff" class="m-b-20 p-y-20">
           <StackLayout width="90%">
-            <Label text="Your Events" class="h2" color="white" />
+            <Label
+              text="YOUR EVENTS"
+              class="font-weight-bold m-b-10"
+              color="#0a4f9a"
+              opacity="0.7"
+            />
             <StackLayout>
               <FlexboxLayout
                 v-for="event in events"
-                class="home-menu-item"
+                :key="event.Button_URL"
                 @tap="goToPage(event.Button_URL)"
               >
-                <Label :text="fontIcon('f481')" class="fas p-r-10" />
-                <Label :text="event.Button_Text" />
+                <Label :text="event.Button_Text" class="h2" color="#0a4f9a" />
               </FlexboxLayout>
             </StackLayout>
           </StackLayout>
