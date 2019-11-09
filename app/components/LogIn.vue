@@ -23,16 +23,6 @@
         <StackLayout class="hr-light" />
       </StackLayout>
 
-      <StackLayout class="input-field">
-        <TextField
-          v-model="password"
-          :secure="true"
-          hint="Password"
-          class="input"
-        />
-        <StackLayout class="hr-light" />
-      </StackLayout>
-
       <Button
         text="Log In"
         class="btn btn-primary"
