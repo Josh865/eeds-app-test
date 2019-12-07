@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <ActionBar title="Home Menu" class="action-bar">
+    <ActionBar title="Home Menu" class="action-bar" color="white">
       <!-- Hide the "Go Back" button -->
       <NavigationButton visibility="collapse" />
 
@@ -9,11 +9,17 @@
 
     <ScrollView>
       <StackLayout>
-        <StackLayout backgroundColor="#c3dfff" class="m-b-20 p-y-20">
+        <!-- This section is for the user's events. It's singled out and emphasized at
+        the top of the stack. -->
+        <StackLayout
+          v-if="events.length > 0"
+          backgroundColor="#c3dfff"
+          class="m-b-20 p-y-20"
+        >
           <StackLayout width="90%">
             <Label
               text="YOUR EVENTS"
-              class="font-weight-bold m-b-10"
+              class="font-weight-bold"
               color="#0a4f9a"
               opacity="0.7"
             />
@@ -29,7 +35,8 @@
           </StackLayout>
         </StackLayout>
 
-        <StackLayout>
+        <!-- Other options go here, below the user's events -->
+        <StackLayout class="m-t-10">
           <HomeMenuSection
             v-for="section in sections"
             :key="section"
