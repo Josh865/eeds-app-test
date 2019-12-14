@@ -51,9 +51,9 @@ export default {
   },
 
   methods: {
-    // Emit an event instructing the parent component to load a Web View pointing to the specified URL
+    // Tell parent to load WebView for the given URL
     onItemTap(item) {
-      this.$emit('go-to-page', item.Button_URL);
+      this.$emit('go-to-page', item.Button_URL, item.Button_Text);
     },
   },
 };

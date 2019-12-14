@@ -124,10 +124,11 @@ export default {
 
     // This will open the URL in a WebView when a button is tapped inside the
     // HomeMenuSection child component
-    goToPage(url) {
+    goToPage(url, title = 'eeds') {
       this.$navigateTo(WebViewContainer, {
         props: {
           url: `https://www.eeds.com/${url}`,
+          title,
         },
       });
     },

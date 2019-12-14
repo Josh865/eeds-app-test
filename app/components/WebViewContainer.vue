@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <ActionBar :title="`WebView`" class="action-bar">
+    <ActionBar :title="title" class="action-bar">
       <NavigationButton
         text="Go back"
         android.systemIcon="ic_menu_back"
@@ -17,6 +17,10 @@ export default {
     url: {
       type: String,
       required: true,
+    },
+    title: {
+      type: String,
+      default: 'eeds',
     },
   },
 
