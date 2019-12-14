@@ -19,6 +19,7 @@
           :autocorrect="false"
           :keyboardType="selectedLogInType.keyboardType"
           class="input"
+          @loaded="showKeyboard"
         />
         <StackLayout class="hr-light" />
       </StackLayout>
@@ -42,6 +43,8 @@
 <script>
 const appSettings = require('application-settings');
 const httpModule = require('tns-core-modules/http');
+const platformModule = require('tns-core-modules/platform');
+const utilsModule = require('tns-core-modules/utils/utils');
 
 import HomeMenuPage from './HomeMenu';
 
@@ -95,6 +98,19 @@ export default {
   },
 
   methods: {
+    // Show the keyboard as soon as the input is loaded. This is handled differently
+    // depending on the platform. The destructured "object" variable is the TextField.
+    showKeyboard({ object }) {
+      if (platformModule.isAndroid) {
+        setTimeout(() => {
+          object.focus();
+          utilsModule.showSoftInput(object);
+        }, 10);
+      } else {
+        object.focus();
+      }
+    },
+
     async logIn() {
       this.busy = true;
 
