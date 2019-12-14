@@ -108,10 +108,7 @@ export default {
     async logIn() {
       this.busy = true;
 
-      if (!this.value) {
-        alert(`Please enter your ${this.selectedLogInType.label}.`);
-        return;
-      }
+      await this.validate();
 
       httpModule.getJSON(this.logInUrl).then(
         async response => {
@@ -157,6 +154,27 @@ export default {
             reject();
           }
         });
+      });
+    },
+
+    validate() {
+      return new Promise((resolve, reject) => {
+        // Make sure user entered a value
+        if (this.value.length === 0) {
+          alert(`Please enter your ${this.selectedLogInType.label}`);
+          reject();
+          return;
+        }
+
+        // Make sure PIN is exactly eight characters
+        if (this.selectedLogInType.label === 'PIN' && this.value.length !== 8) {
+          alert(`Your PIN should be exactly eight numbers long.`);
+          reject();
+          return;
+        }
+
+        // If we made it this far, everything checks out
+        resolve();
       });
     },
   },
