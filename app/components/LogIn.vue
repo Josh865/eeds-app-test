@@ -14,7 +14,7 @@
     <StackLayout class="form">
       <StackLayout class="input-field">
         <TextField
-          v-model="value"
+          v-model.trim="value"
           :hint="selectedLogInType.label"
           :autocorrect="false"
           :keyboardType="selectedLogInType.keyboardType"
