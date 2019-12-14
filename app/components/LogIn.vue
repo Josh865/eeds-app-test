@@ -30,12 +30,6 @@
         marginTop="15"
         @tap="logIn"
       />
-
-      <Button
-        text="Forgot Password?"
-        class="btn btn-outline btn-rounded-sm"
-        @tap="logIn"
-      />
     </StackLayout>
   </Page>
 </template>
